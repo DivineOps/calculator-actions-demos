@@ -30,7 +30,8 @@ jobs:
         VERSION=$(date +%s)
         
         # Login into docker with my username and GitHub token
-        docker login docker.pkg.github.com --username ${GITHUB_ACTOR} --password ${{ secrets.GITHUB_TOKEN }}
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+        # docker login docker.pkg.github.com --username ${GITHUB_ACTOR} --password ${{ secrets.GITHUB_TOKEN }}
         
         # Build the Docker container
         docker build . --file Dockerfile --tag docker.pkg.github.com/${REPO}/app:${VERSION}
